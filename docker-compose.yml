@@ -1,0 +1,25 @@
+version: '1.0.0'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    environment:
+      PGHOST: db
+      PGPORT: 5432
+      PGUSER: user_agriculture
+      PGPASSWORD: password_agriculture
+      PGDATABASE: agriculture
+  db:
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: user_agriculture
+      POSTGRES_PASSWORD: password_agriculture
+      POSTGRES_DB: agriculture

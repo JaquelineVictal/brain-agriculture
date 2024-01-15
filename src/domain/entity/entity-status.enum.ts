@@ -1,0 +1,4 @@
+export enum ENTITY_STATUS {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}

@@ -1,0 +1,10 @@
+
+#APP
+APP_PORT=3000
+
+DATABASE_URL="postgresql://user_agriculture:password_agriculture@localhost:5432/agriculture?schema=public"
+
+# AUTH
+
+JWT_EXPIRES_IN_MINUTES=60
+JWT_SECRET=KEEP_YOUR_SECRET_SAFE_617369726d66693438346e76206468313d
