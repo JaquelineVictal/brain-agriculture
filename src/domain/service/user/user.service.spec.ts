@@ -22,7 +22,7 @@ describe('UserService', () => {
         {
           provide: UserRepository,
           useValue: {
-            created: jest.fn().mockResolvedValue(savedUserEntityMock),
+            create: jest.fn().mockResolvedValue(savedUserEntityMock),
             findByEmail: jest.fn().mockResolvedValue(null),
             findById: jest.fn().mockResolvedValue(savedUserEntityMock),
             findAll: jest.fn().mockResolvedValue([savedUserEntityMock]),

@@ -28,6 +28,7 @@ model RuralProducer {
   nameFarm                      String      @db.VarChar(100) 
   city                          String      @db.VarChar(100)
   state                         String      @db.VarChar(100)
+  areaTotal                     Float
   areaAgricultural              Float
   areaVegetation                Float
   createdAt                     DateTime    @default(now())

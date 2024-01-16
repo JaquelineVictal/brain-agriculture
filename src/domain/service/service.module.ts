@@ -12,6 +12,7 @@ import {
   UnknownToExceptionNormalizer,
 } from './exception-handler/default-strategies';
 import { UserService } from './user/user.service';
+import { CultivationService } from './cultivation/cultivation.service';
 @Module({
   imports: [RepositoryModule],
   controllers: [],
@@ -26,6 +27,7 @@ import { UserService } from './user/user.service';
     ErrorToExceptionNormalizer,
     StringToExceptionNormalizer,
     NumberToExceptionNormalizer,
+    CultivationService,
   ],
   exports: [
     UserService,
@@ -38,6 +40,7 @@ import { UserService } from './user/user.service';
     ErrorToExceptionNormalizer,
     StringToExceptionNormalizer,
     NumberToExceptionNormalizer,
+    CultivationService,
   ],
 })
 export class ServiceModule {}
