@@ -58,7 +58,6 @@ export class CultivationService {
   }
 
   private async _existingCultivationByName(name: string): Promise<void> {
-    console.debug({ name });
     const existingCultivation = await this._repository.findByName(name);
 
     if (existingCultivation) {

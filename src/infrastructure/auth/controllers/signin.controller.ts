@@ -2,7 +2,9 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { Public } from '../decorators/is-public.decorator';
 import { SignInDto } from './dtos/signin.dto';
 import { JwtAuthService } from '../services/jwt-auth.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('SignIn')
 @Controller('sign-in')
 export class SingInController {
   constructor(private readonly _authService: JwtAuthService) {}

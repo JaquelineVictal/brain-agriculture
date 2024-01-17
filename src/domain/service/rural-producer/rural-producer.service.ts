@@ -28,6 +28,7 @@ export class RuralProducerService {
   async findById(ruralProducerId: number): Promise<RuralProducerEntity> {
     const findRuralProducer =
       await this._findRuralProducerById(ruralProducerId);
+
     return findRuralProducer;
   }
 
@@ -40,8 +41,21 @@ export class RuralProducerService {
     id: number,
   ): Promise<RuralProducerEntity> {
     await this._findRuralProducerById(id);
+    const cultivationIds = updateRuralProducerDto.cultivationIds;
 
-    return await this._repository.updateById(updateRuralProducerDto, id);
+    if (updateRuralProducerDto.hasOwnProperty('cultivationIds')) {
+      delete updateRuralProducerDto['cultivationIds'];
+    }
+
+    if (Object.keys(updateRuralProducerDto).length !== 0) {
+      return this._repository.updateById(updateRuralProducerDto, id);
+    }
+
+    if (cultivationIds?.length > 0) {
+      await this._repository.updateRuralProducerCultivation(cultivationIds, id);
+    }
+
+    return this.findById(id);
   }
 
   async deleteById(ruralProducerId: number): Promise<RuralProducerEntity> {

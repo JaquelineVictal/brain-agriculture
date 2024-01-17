@@ -40,6 +40,7 @@ export class RuralProducerRepository {
 
   async findById(id: number): Promise<RuralProducerEntity | null> {
     const ruralProducer = await this.database.ruralProducer.findUnique({
+      include: { ruralProducerCultivation: true },
       where: { id },
     });
 
@@ -59,7 +60,9 @@ export class RuralProducerRepository {
   }
 
   async findAll(): Promise<RuralProducerEntity[]> {
-    const ruralProducer = await this.database.ruralProducer.findMany();
+    const ruralProducer = await this.database.ruralProducer.findMany({
+      include: { ruralProducerCultivation: true },
+    });
 
     if (!ruralProducer.length) return [];
 
@@ -80,24 +83,7 @@ export class RuralProducerRepository {
     const cultivationIds = data.cultivationIds;
 
     if (cultivationIds?.length > 0) {
-      const ruralProducerCultivationData = cultivationIds.map(
-        (cultivationId) => {
-          return {
-            cultivationId,
-            ruralProducerId: id,
-          };
-        },
-      );
-
-      await this.database.ruralProducerCultivation.deleteMany({
-        where: {
-          ruralProducerId: id,
-        },
-      });
-
-      await this.database.ruralProducerCultivation.createMany({
-        data: ruralProducerCultivationData,
-      });
+      await this.updateRuralProducerCultivation(cultivationIds, id);
     }
 
     return RuralProducerEntity.fromDatabase({
@@ -120,5 +106,27 @@ export class RuralProducerRepository {
     });
 
     return ruralProducer ? true : false;
+  }
+
+  async updateRuralProducerCultivation(
+    cultivationIds: number[],
+    ruralProducerId: number,
+  ) {
+    const ruralProducerCultivationData = cultivationIds.map((cultivationId) => {
+      return {
+        cultivationId,
+        ruralProducerId,
+      };
+    });
+
+    await this.database.ruralProducerCultivation.deleteMany({
+      where: {
+        ruralProducerId,
+      },
+    });
+
+    await this.database.ruralProducerCultivation.createMany({
+      data: ruralProducerCultivationData,
+    });
   }
 }

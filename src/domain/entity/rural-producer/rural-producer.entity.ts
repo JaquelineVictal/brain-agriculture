@@ -2,7 +2,6 @@ import { HumanName } from 'src/domain/class/human-name/human-name.class';
 import { ENTITY_STATUS } from '../entity-status.enum';
 import { Prisma } from '@prisma/client';
 import { ResponseRuralProducerDto } from 'src/application/dto/rural-producer/response-rural-producer.dto';
-import { CultivationEntity } from '../cultivation/cultivation.entity';
 import { HumanDocument } from 'src/domain/class/human-document/human-document.class';
 
 export class RuralProducerEntity {
@@ -58,7 +57,9 @@ export class RuralProducerEntity {
       areaTotal: params.areaTotal,
       areaAgricultural: params.areaAgricultural,
       areaVegetation: params.areaVegetation,
-      cultivationIds: params.cultivationIds,
+      cultivationIds: this.getCultivationIdsFromDatabase(
+        params.ruralProducerCultivation,
+      ),
       status: params.deletedAt ? ENTITY_STATUS.INACTIVE : ENTITY_STATUS.ACTIVE,
     });
   }
@@ -114,13 +115,11 @@ export class RuralProducerEntity {
     };
   }
 
-  private static getCultivationEntity(
+  private static getCultivationIdsFromDatabase(
     ruralProducerCultivation,
-  ): CultivationEntity[] {
-    return ruralProducerCultivation.map((ruralProducerCultivation) => {
-      return CultivationEntity.fromDatabase(
-        ruralProducerCultivation.cultivation,
-      );
+  ): number[] {
+    return ruralProducerCultivation?.map((ruralProducerCultivation) => {
+      return ruralProducerCultivation.cultivationId;
     });
   }
 }

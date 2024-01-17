@@ -13,7 +13,7 @@ export function IsAreaTotalValid(validationOptions?: ValidationOptions) {
       options: validationOptions,
       validator: {
         validate(value: any, args: ValidationArguments) {
-          const areaTotal = value;
+          const areaTotal = args.object['areaTotal'];
           const areaAgricultural = args.object['areaAgricultural'];
           const areaVegetation = args.object['areaVegetation'];
 
