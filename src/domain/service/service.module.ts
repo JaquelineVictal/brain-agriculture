@@ -11,6 +11,7 @@ import {
 import { UserService } from './user/user.service';
 import { CultivationService } from './cultivation/cultivation.service';
 import { RuralProducerService } from './rural-producer/rural-producer.service';
+import { DashboardService } from './dashboard/dashboard.service';
 @Module({
   imports: [RepositoryModule],
   controllers: [],
@@ -24,6 +25,7 @@ import { RuralProducerService } from './rural-producer/rural-producer.service';
     NumberToExceptionNormalizer,
     CultivationService,
     RuralProducerService,
+    DashboardService,
   ],
   exports: [
     UserService,
@@ -35,6 +37,7 @@ import { RuralProducerService } from './rural-producer/rural-producer.service';
     NumberToExceptionNormalizer,
     CultivationService,
     RuralProducerService,
+    DashboardService,
   ],
 })
 export class ServiceModule {}

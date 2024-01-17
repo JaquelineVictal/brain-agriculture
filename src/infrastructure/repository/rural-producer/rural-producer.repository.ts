@@ -3,6 +3,9 @@ import { DatabaseService } from '../../database/database.service';
 
 import { RuralProducerEntity } from 'src/domain/entity/rural-producer/rural-producer.entity';
 import { UpdateRuralProducerDto } from 'src/application/dto/rural-producer/update-rural-producer.dto';
+import { StateDistributionDto } from 'src/application/dto/dashboard/state-distribution.dto';
+import { CultivationDistributionDto } from 'src/application/dto/dashboard/cultivation-distribution.dto';
+import { LandUseDistributionDto } from 'src/application/dto/dashboard/land-use-distribution.dto';
 
 @Injectable()
 export class RuralProducerRepository {
@@ -128,5 +131,55 @@ export class RuralProducerRepository {
     await this.database.ruralProducerCultivation.createMany({
       data: ruralProducerCultivationData,
     });
+  }
+
+  async getTotalFarmsCount(): Promise<number> {
+    return this.database.ruralProducer.count();
+  }
+
+  async getTotalFarmArea(): Promise<number> {
+    const totalArea = await this.database.ruralProducer.aggregate({
+      _sum: { areaTotal: true },
+    });
+    return totalArea._sum.areaTotal || 0;
+  }
+
+  async getStateDistribution(): Promise<StateDistributionDto[]> {
+    const result = await this.database.ruralProducer.groupBy({
+      by: ['state'],
+      _count: true,
+    });
+
+    return result.map((result) => {
+      return {
+        state: result.state,
+        count: result._count,
+      };
+    });
+  }
+
+  async getCultivationDistribution(): Promise<CultivationDistributionDto[]> {
+    const result = await this.database.ruralProducerCultivation.groupBy({
+      by: ['cultivationId'],
+      _count: true,
+    });
+
+    return result.map((result) => {
+      return {
+        cultivationId: result.cultivationId,
+        count: result._count,
+      };
+    });
+  }
+
+  async getLandUseDistribution(): Promise<LandUseDistributionDto> {
+    const areas = await this.database.ruralProducer.aggregate({
+      _sum: { areaTotal: true, areaAgricultural: true, areaVegetation: true },
+    });
+    return {
+      areaTotal: areas._sum.areaTotal || 0,
+      areaAgricultural: areas._sum.areaAgricultural || 0,
+      areaVegetation: areas._sum.areaVegetation || 0,
+    };
   }
 }
