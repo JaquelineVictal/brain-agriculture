@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { ServiceModule } from 'src/domain/service/service.module';
-import { CustomerController } from './customer/customer.controller';
-import { CameraController } from './camera/camera.controller';
-import { AlertLogsController } from './alert-log/alert-log.controller';
 import { HttpErrorHandler } from '../services/error-handler/http-error-handler.service';
 import { AuthModule } from 'src/infrastructure/auth';
+import { UserController } from './user/user.controller';
+import { CultivationController } from './cultivation/cultivation.controller';
+import { RuralProducerController } from './rural-producer/rural-producer.controller';
 
 @Module({
   imports: [ServiceModule, AuthModule],
-  controllers: [CustomerController, CameraController, AlertLogsController],
+  controllers: [UserController, CultivationController, RuralProducerController],
   providers: [HttpErrorHandler],
   exports: [HttpErrorHandler],
 })

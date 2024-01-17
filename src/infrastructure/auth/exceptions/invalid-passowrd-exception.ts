@@ -1,13 +1,13 @@
 import { EXCEPTION_CODE } from 'src/domain/class/abstract-exception/exception-code.enum';
 import { AbstractException } from 'src/domain/class/abstract-exception/exception.abstract';
-import { CustomerEntity } from 'src/domain/entity/customer/customer.entity';
+import { UserEntity } from 'src/domain/entity/user/user.entity';
 
 export class InvalidPasswordException extends AbstractException {
   readonly code = EXCEPTION_CODE.FORBIDDEN;
-  constructor(customer: CustomerEntity) {
+  constructor(user: UserEntity) {
     super('Invalid Email or Password');
-    this.add('customerId', customer.id.value);
-    this.add('customerEmail', customer.email.value);
-    this.add('customerName', customer.name.value);
+    this.add('userId', user.id);
+    this.add('UserEmail', user.email.value);
+    this.add('UserName', user.name.value);
   }
 }

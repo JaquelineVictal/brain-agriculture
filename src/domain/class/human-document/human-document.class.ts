@@ -1,23 +1,23 @@
-import { InvalidDocumentException } from './user-document.exception';
+import { InvalidDocumentException } from './human-document.exception';
 
-export class UserDocument {
+export class HumanDocument {
   constructor(readonly value: string) {}
 
   static create(documentToCheck: string) {
     const digits = documentToCheck?.replace(/[^\d]/g, '');
 
     if (digits?.length === 11) {
-      if (!UserDocument.validateCPF(digits)) {
+      if (!HumanDocument.validateCPF(digits)) {
         throw new InvalidDocumentException(documentToCheck);
       }
-      return new UserDocument(digits);
+      return new HumanDocument(digits);
     }
 
     if (digits?.length === 14) {
-      if (!UserDocument.validateCNPJ(digits)) {
+      if (!HumanDocument.validateCNPJ(digits)) {
         throw new InvalidDocumentException(documentToCheck);
       }
-      return new UserDocument(digits);
+      return new HumanDocument(digits);
     }
 
     throw new InvalidDocumentException(documentToCheck);

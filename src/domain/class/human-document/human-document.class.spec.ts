@@ -1,4 +1,4 @@
-import { UserDocument } from './user-document.class';
+import { HumanDocument } from './human-document.class';
 
 const successScenarios = [
   {
@@ -95,15 +95,15 @@ describe('Document', () => {
   it.each(successScenarios)(
     `the $input is $shouldBeValid`,
     async ({ input, result }) => {
-      const validationErrors = UserDocument.create(input);
+      const validationErrors = HumanDocument.create(input);
 
-      expect(validationErrors).toBeInstanceOf(UserDocument);
+      expect(validationErrors).toBeInstanceOf(HumanDocument);
       expect(validationErrors.value).toEqual(result);
     },
   );
   it.each(errorScenarios)(`the $input is $shouldBeValid`, async ({ input }) => {
     expect(() => {
-      UserDocument.create(input);
+      HumanDocument.create(input);
     }).toThrow();
   });
 });

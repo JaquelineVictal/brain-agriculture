@@ -13,6 +13,11 @@ export class CreateRuralProducerDto {
   @ApiProperty({ type: String })
   @IsString()
   @IsNotEmpty()
+  document: string;
+
+  @ApiProperty({ type: String })
+  @IsString()
+  @IsNotEmpty()
   nameProducer: string;
 
   @ApiProperty({ type: String })

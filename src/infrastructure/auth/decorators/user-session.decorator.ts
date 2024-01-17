@@ -4,13 +4,13 @@ import {
   createParamDecorator,
 } from '@nestjs/common';
 
-export const CustomerSession = createParamDecorator(
+export const UserSession = createParamDecorator(
   async (ctx: ExecutionContext) => {
     const httpContext = ctx.switchToHttp();
     const request = httpContext.getRequest();
 
-    if (!request.customer) throw new UnauthorizedException();
+    if (!request.user) throw new UnauthorizedException();
 
-    return request.customer;
+    return request.user;
   },
 );

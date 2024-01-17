@@ -5,6 +5,9 @@ export class ResponseRuralProducerDto {
   id: number;
 
   @ApiProperty({ type: String })
+  document: string;
+
+  @ApiProperty({ type: String })
   nameProducer: string;
 
   @ApiProperty({ type: String })
@@ -26,5 +29,5 @@ export class ResponseRuralProducerDto {
   areaVegetation: number;
 
   @ApiProperty({ type: [Number] })
-  cultivationIds: number[];
+  cultivationIds?: number[];
 }

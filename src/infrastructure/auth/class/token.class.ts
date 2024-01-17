@@ -1,9 +1,9 @@
-import { CustomerEntity } from 'src/domain/entity/customer/customer.entity';
+import { UserEntity } from 'src/domain/entity/user/user.entity';
 
 export class Token {
-  readonly customerId: string;
+  readonly userId: number;
 
-  constructor(customer: CustomerEntity) {
-    this.customerId = customer.id.value;
+  constructor(user: UserEntity) {
+    this.userId = user.id;
   }
 }
