@@ -1,56 +1,29 @@
-![Logo](gabriel_logo.png)
-
-A Gabriel é uma startup focada em proteger pessoas. Com isso, buscamos talentos capazes de construir sistemas com foco em segurança e escalabilidade. Para descobrir se você é o próximo talento a integrar o nosso time, queremos propor o desafio a seguir.
-
 #### Desafio
 
-Implementar uma API web, utilizando o padrão REST, para gerenciamento de câmeras dos nossos clientes. Através de sua API deve ser possível:
+Implementar uma API web, utilizando o padrão REST, para gerenciamento de câmeras dos nossos clientes. Através de sua API deve ser possível cadastrar um produtor rural com os seguintes dados:
 
-- Adicionar novas câmeras
-- Desabilitar uma câmera
-- Listar as câmeras de um cliente
-- Registrar ocorrência de alertas
-- Obter ocorrências de alertas por intervalo de tempo
+1.  CPF ou CNPJ
+2.  Nome do produtor
+3.  Nome da Fazenda
+4.  Cidade
+5.  Estado
+6.  Área total em hectares da fazenda
+7.  Área agricultável em hectares
+8.  Área de vegetação em hectares
+9.  Culturas plantadas (Soja, Milho, Algodão, Café, Cana de Açucar)
 
 #### Regras de Negócio
 
-- Não é permitida mais de uma câmera com mesmo IP por cliente
-- Não há máscara de rede, porém o formato do IP precisa ser válido
-- Uma câmera está obrigatoriamente associada a um único cliente
-- Um alerta está obrigatoriamente associado a uma única câmera
-
-```mermaid
-erDiagram
-    customers ||--o{ cameras : has
-    customers {
-        string id PK
-        string name
-    }
-    cameras ||--o{ alert_logs : emit
-    cameras {
-        string id PK
-        string name
-        string ip
-        boolean isEnabled
-        string customer_id FK
-    }
-    alert_logs {
-        string id PK
-        datetime occurred_at
-        string camera_id FK
-    }
-```
-
-#### Critérios de Aceitação
-
-- Deve ser possível filtrar câmeras por estado (hab./desabilitada)
-- Deve ser possível filtrar as ocorrências de alerta:
-  - Por cliente
-  - Por intervalo de tempo válido
-  - A partir de uma data/hora válida
-  - Se nenhum intervalo for passado, retorne as ocorrências do dia.
-
-Com exceção das regras de negócios citadas no Desafio, nenhum erro precisa de tratamento específico. Entretanto, a API não deve retornar informações técnicas sobre erros não tratados, tais como mensagens de exceções ou pilha de execução (stack trace).
+- O usuário deverá ter a possibilidade de cadastrar, editar, e excluir produtores rurais.
+- O sistema deverá validar CPF e CNPJ digitados incorretamente.
+- A soma de área agrícultável e vegetação, não deverá ser maior que a área total da fazenda
+- Cada produtor pode plantar mais de uma cultura em sua Fazenda.
+- A plataforma deverá ter um Dashboard que exiba:
+  - Total de fazendas em quantidade
+  - Total de fazendas em hectares (área total)
+  - Gráfico de pizza por estado.
+  - Gráfico de pizza por cultura.
+  - Gráfico de pizza por uso de solo (Área agricultável e vegetação)
 
 #### Iniciar o projeto
 
@@ -77,6 +50,4 @@ yarn start:dev
 
 #### API
 
-A Documntação da Api está disponivel no link abaixo.
-
-[Documentação da Api](https://documenter.getpostman.com/view/29520786/2s9YXcdjXm)
+A Documntação da Api está disponivel é pelo swagger link: http://localhost:3000/api#/
