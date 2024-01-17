@@ -7,9 +7,11 @@ import {
   Put,
   Delete,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -19,11 +21,11 @@ import {
 } from '@nestjs/swagger';
 
 import { HttpErrorHandler } from 'src/application/services/error-handler/http-error-handler.service';
-import { Public } from 'src/infrastructure/auth/decorators/is-public.decorator';
 import { CreateCultivationDto } from 'src/application/dto/cultivation/create-cultivation.dto';
 import { ResponseCultivationDto } from 'src/application/dto/cultivation/response-cultivation.dto';
 import { UpdateCultivationDto } from 'src/application/dto/cultivation/update-cultivation.dto';
 import { CultivationService } from 'src/domain/service/cultivation/cultivation.service';
+import { JwtAuthGuard } from 'src/infrastructure/auth/guards/jwt-auth.guard';
 
 @ApiTags('Cultivation')
 @Controller('cultivation')
@@ -33,8 +35,9 @@ export class CultivationController {
     private readonly _httpErrorHandler: HttpErrorHandler,
   ) {}
 
-  @Public()
   @Post()
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create a new cultivation' })
   @ApiOkResponse({
     status: 201,
@@ -55,6 +58,8 @@ export class CultivationController {
   }
 
   @Get(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get cultivation by ID' })
   @ApiParam({ name: 'id', description: 'Cultivation ID' })
   @ApiResponse({
@@ -75,7 +80,8 @@ export class CultivationController {
   }
 
   @Get()
-  @Get()
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get all cultivations' })
   @ApiResponse({
     status: 200,
@@ -96,6 +102,8 @@ export class CultivationController {
   }
 
   @Put(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Update cultivation by ID' })
   @ApiParam({ name: 'id', description: 'cultivation ID' })
   @ApiResponse({
@@ -121,6 +129,8 @@ export class CultivationController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @HttpCode(202)
   @ApiOperation({ summary: 'Delete cultivation by ID' })
   @ApiParam({ name: 'id', description: 'Cultivation ID' })

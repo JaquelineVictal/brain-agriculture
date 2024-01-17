@@ -7,9 +7,11 @@ import {
   Put,
   Delete,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -23,18 +25,19 @@ import { UpdateRuralProducerDto } from 'src/application/dto/rural-producer/updat
 
 import { HttpErrorHandler } from 'src/application/services/error-handler/http-error-handler.service';
 import { RuralProducerService } from 'src/domain/service/rural-producer/rural-producer.service';
-import { Public } from 'src/infrastructure/auth/decorators/is-public.decorator';
+import { JwtAuthGuard } from 'src/infrastructure/auth/guards/jwt-auth.guard';
 
 @ApiTags('RuralProducer')
-@Controller('ser')
+@Controller('rural-producer')
 export class RuralProducerController {
   constructor(
     private readonly _ruralProducerService: RuralProducerService,
     private readonly _httpErrorHandler: HttpErrorHandler,
   ) {}
 
-  @Public()
   @Post()
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create a new ruralProducer' })
   @ApiOkResponse({
     status: 201,
@@ -55,6 +58,8 @@ export class RuralProducerController {
   }
 
   @Get(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get ruralProducer by ID' })
   @ApiParam({ name: 'id', description: 'RuralProducer ID' })
   @ApiResponse({
@@ -75,7 +80,8 @@ export class RuralProducerController {
   }
 
   @Get()
-  @Get()
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get all ruralProducers' })
   @ApiResponse({
     status: 200,
@@ -96,6 +102,8 @@ export class RuralProducerController {
   }
 
   @Put(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Update ruralProducer by ID' })
   @ApiParam({ name: 'id', description: 'ruralProducer ID' })
   @ApiResponse({
@@ -121,6 +129,8 @@ export class RuralProducerController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @HttpCode(202)
   @ApiOperation({ summary: 'Delete ruralProducer by ID' })
   @ApiParam({ name: 'id', description: 'RuralProducer ID' })

@@ -11,6 +11,6 @@ export class UserResponseDto {
   @ApiProperty({ type: String })
   email: string;
 
-  @ApiProperty({ type: ENTITY_STATUS })
+  @ApiProperty({ type: String })
   status: ENTITY_STATUS;
 }
