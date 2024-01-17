@@ -100,7 +100,10 @@ export class RuralProducerRepository {
       });
     }
 
-    return RuralProducerEntity.fromDatabase(ruralProducer);
+    return RuralProducerEntity.fromDatabase({
+      ...ruralProducer,
+      cultivationIds,
+    });
   }
 
   async deleteById(id: number): Promise<RuralProducerEntity> {

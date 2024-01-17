@@ -8,8 +8,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
-    .setTitle('Gabriel')
-    .setDescription('Gabriel description')
+    .setTitle('Brain Agriculture')
+    .setDescription('Brain Agriculture description')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
